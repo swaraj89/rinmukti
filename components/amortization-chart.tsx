@@ -11,13 +11,11 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatCurrency } from "@/lib/utils";
 import {
-  Chart,
+  ChartConfig,
   ChartContainer,
   ChartLegend,
-  ChartLegendItem,
   ChartTooltip,
   ChartTooltipContent,
-  ChartTooltipItem,
 } from "@/components/ui/chart";
 import { Bar, Line } from "recharts";
 

@@ -24,6 +24,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import type { ExtraPayments } from "./loan-simulator";
+import { formatCurrency, formatPercentage } from "@/lib/utils";
 
 const formSchema = z.object({
   paymentType: z.enum(["monthly", "yearly", "both"], {
@@ -59,6 +60,7 @@ export default function ExtraPaymentOptions({
   });
 
   const paymentType = form.watch("paymentType");
+  const extraMonthlyAmount = form.watch("extraMonthlyAmount");
 
   function handleSubmit(values: z.infer<typeof formSchema>) {
     onSubmit(values);
@@ -68,6 +70,15 @@ export default function ExtraPaymentOptions({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         <div>
+          <h1 className="text-2xl font-bold">
+            {formatCurrency(initialData.monthlyAmount)}
+            {extraMonthlyAmount > 0 && (
+              <span> + {formatCurrency(extraMonthlyAmount)}</span>
+            )}
+          </h1>
+          <p className="text-sm text-gray-400 dark:text-gray-400 mb-4">
+            Current monthly payment
+          </p>
           <h2 className="text-lg font-medium mb-4">
             Customize Your Payment Strategy
           </h2>
@@ -153,6 +164,12 @@ export default function ExtraPaymentOptions({
                   </div>
                 </FormControl>
                 <FormMessage />
+                <FormDescription>
+                  {formatPercentage(
+                    extraMonthlyAmount / initialData.monthlyAmount
+                  )}{" "}
+                  of your current monthly payment
+                </FormDescription>
               </FormItem>
             )}
           />
